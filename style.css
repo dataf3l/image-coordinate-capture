@@ -1,4 +1,4 @@
-label {
+#custom-button {
   background-color: blue;
   color: white;
   padding: 0.5rem;
@@ -8,7 +8,7 @@ label {
   font-family: sans-serif;
 }
 
-#file-chosen{
+#custom-text {
   margin-left: 0.3rem;
   font-family: sans-serif;
 }
