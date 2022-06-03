@@ -8,16 +8,21 @@
   </head>
 
   <body>
+    
+
+    <h1>Image Coordinate Capture</h1> 
+
+    <input type="file" name="inpFile" id="inpFile">
 
     <br>
-      <h1>Image Coordinate Capture</h1>
-      <input type="file" id="real-file" hidden="hidden"/>
-      <button type="button" id="custom-button">Upload File</button>
-      <span id="custom-text">No file chosen</span>
 
-
-
-
+    
+    <div class="doc-preview" id="docPreview">
+    	<iframe src="" alt="Doc Preview" class="doc-preview__doc" onclick="showCoords(event)" onmouseout="clearCoor()"></iframe>
+    	<p id="inpFile"></p>
+    </div>
+   
+  </body>
 </html>
 
 
@@ -25,6 +30,7 @@
 
 
 <script src="script.js"></script>
+
 
 
 
