@@ -10,18 +10,24 @@
   <body>
     
 
-    <h1>Image Coordinate Capture</h1> 
-
-    <input type="file" name="inpFile" id="inpFile">
-
-    <br>
+    
+    
 
     
     <div class="doc-preview" id="docPreview">
-    	<iframe src="" alt="Doc Preview" class="doc-preview__doc" onclick="showCoords(event)" onmouseout="clearCoor()"></iframe>
-    	<p id="inpFile"></p>
+      <img src="" alt="Doc Preview" class="doc-preview__doc" onmousemove="showCoords(event)" onmouseout="clearCoor()">
+    	
     </div>
    
+      
+      <h3>Image Coordinate Capture</h3> 
+
+      <input type="file" name="inpFile" id="inpFile">
+      <p id="coordinates"></p>
+      <p>X coordinate: <span id="coordinatex"></span></p>
+      <p>Y coordinate: <span id="coordinatey"></span></p>
+      <br>
+      
   </body>
 </html>
 

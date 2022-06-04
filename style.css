@@ -1,3 +1,14 @@
+head {
+  padding: 0px;
+  margin: 0px;
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+
 #custom-button {
   background-color: blue;
   color: white;
@@ -13,7 +24,7 @@
   font-family: sans-serif;
 }
 
-h1 {
+h3 {
   font-family: sans-serif;
   text-align: center;
 }
@@ -30,15 +41,32 @@ h1 {
 
 } */
 
-iframe {
-    display: block;       /* iframes are inline by default 
+img {
+    /*display: block;        iframes are inline by default 
     background: #000; */
-    border: none;         /* Reset default border */
-    height: 100vh;        /* Viewport-relative units */
+    /* border: 1px;          Reset default border */
+    height: auto; 
     width: 1000px;
+    border-style: solid;
+    margin: 0px;
+    padding: 0px;
+    float: left;
 }
 
 #inpFile {
   margin-bottom: 20px;
 }
 
+div {
+  margin: 0px;
+  padding: 0px;
+}
+
+input {
+  margin-left: 10px;
+}
+
+#coordinates {
+  margin-left: 10px;
+  position: sticky;
+}

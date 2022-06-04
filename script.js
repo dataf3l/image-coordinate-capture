@@ -19,15 +19,22 @@ inpFile.addEventListener("change", function() {
   }
 });
 
-
-
  function showCoords(event) {
   var x = event.clientX;
   var y = event.clientY;
   var coor = "X coords: " + x + ", Y coords: " + y;
-  document.getElementById("inpFile").innerHTML = coor;
+  document.getElementById("coordinates").innerHTML = coor;
+  document.getElementById("coordinatex").innerHTML = x;
+  document.getElementById("coordinatey").innerHTML = y
 }
 
 function clearCoor() {
-  document.getElementById("inpFile").innerHTML = "";
+  document.getElementById("coordinates").innerHTML = "";
 }
+
+/* function saveCoor() {
+  document.addEventListener("click", function() {
+  ;
+  })
+}
+*/
