@@ -1,17 +1,33 @@
-const realFileBtn = document.getElementById('real-file');
+const inpFile = document.getElementById("inpFile")
+const previewContainer = document.getElementById("docPreview")
+const previewDoc = previewContainer.querySelector(".doc-preview__doc")
+const previewDefaultText = previewContainer.querySelector(".doc-preview__default-text")
 
-const customBtn = document.getElementById('custom-button');
 
-const customTxt = document.getElementById('custom-text');
+inpFile.addEventListener("change", function() {
+  const file = this.files[0];
 
-customBtn.addEventListener("click", function() {
-  realFileBtn.click();
-});
+  if (file) {
+    const reader = new FileReader();
+  
+  reader.addEventListener("load", function() {
+    previewDoc.setAttribute("src",this.result);
+  });
 
-realFileBtn.addEventListener("change", function() {
-  if (realFileBtn.value) {
-    customTxt.innerHTML = realFileBtn.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-  } else {
-      customTxt.innerHTML = "No file chosen"
+  reader.readAsDataURL(file);
+
   }
 });
+
+
+
+ function showCoords(event) {
+  var x = event.clientX;
+  var y = event.clientY;
+  var coor = "X coords: " + x + ", Y coords: " + y;
+  document.getElementById("inpFile").innerHTML = coor;
+}
+
+function clearCoor() {
+  document.getElementById("inpFile").innerHTML = "";
+}
