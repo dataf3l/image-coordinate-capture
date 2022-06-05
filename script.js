@@ -32,9 +32,53 @@ function clearCoor() {
   document.getElementById("coordinates").innerHTML = "";
 }
 
-/* function saveCoor() {
+
+function saveCoor() {
   document.addEventListener("click", function() {
-  ;
+    var x = document.getElementById("coordinatex").innerHTML;
+    var y = document.getElementById("coordinatey").innerHTML;
+    var name = document.getElementById("inpFile").value;
+    var json = {
+      "name": name,
+      "x": x,
+      "y": y
+    }
+    var jsonString = JSON.stringify(json);
+    var fs = require('fs');
+    fs.writeFile("coords.json", jsonString, function(err) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log("The file was saved!");
+    });
   })
 }
-*/
+
+
+function altClick() {
+  document.addEventListener("click", function() {
+    var x = document.getElementById("coordinatex").innerHTML;
+    var y = document.getElementById("coordinatey").innerHTML;
+    var width = document.getElementById("coordinatex").innerHTML - document.getElementById("coordinatex").innerHTML;
+    var height = document.getElementById("coordinatey").innerHTML - document.getElementById("coordinatey").innerHTML;
+    var name = document.getElementById("inpFile").value;
+    var json = {
+      "name": name,
+      "x": x,
+      "y": y,
+      "width": width,
+      "height": height
+    }
+    var jsonString = JSON.stringify(json);
+    var fs = require('fs');
+    fs.writeFile("coords.json", jsonString, function(err) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log("The file was saved!");
+    });
+  }
+
+
+
+
