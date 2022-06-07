@@ -15,7 +15,7 @@
 
     
     <div class="doc-preview" id="docPreview">
-      <img src="" alt="Doc Preview" class="doc-preview__doc" onmousemove="showCoords(event)" onmouseout="clearCoor()" onaltkey="altClick(event)">
+      <img src="" alt="Doc Preview" class="doc-preview__doc" onmousemove="showCoords(event)" onmouseout="clearCoor()" onclick="handleClick()">
     	
     </div>
    
@@ -24,8 +24,21 @@
 
       <input type="file" name="inpFile" id="inpFile">
       <p id="coordinates"></p>
-      <p>X coordinate: <span id="coordinatex"></span></p>
-      <p>Y coordinate: <span id="coordinatey"></span></p>
+      <!-- a form with these fields:
+        x,y,width,height, field name -->
+      
+        <input type="number" size="4"  name="x" id="x">
+        <input type="number" size="4"  name="y" id="y">
+        <input type="number" size="4"  name="width" id="width">
+        <input type="number" size="4"  name="height" id="height">
+        <input type="text"   name="field" id="field">
+        <!-- a button that calls the addField function -->
+        <button type="button" onclick="addField()">Add Field</button>
+
+        <!-- show json button -->
+        <button type="button" onclick="showJSON()">Show JSON</button>
+
+      
       <br>
       
   </body>
