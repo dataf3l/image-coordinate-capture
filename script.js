@@ -3,7 +3,7 @@ const previewContainer = document.getElementById("docPreview")
 const previewDoc = previewContainer.querySelector(".doc-preview__doc")
 const previewDefaultText = previewContainer.querySelector(".doc-preview__default-text")
 
-var mode = 0;
+
 var firstClickX = 0;
 var firstClickY = 0;
 
@@ -24,8 +24,6 @@ function set_state(state){
 function get_state(){
   return global_state;
 }
-
-
 
 saveBtn = document.getElementById("saveBtn");
 
@@ -56,7 +54,6 @@ function resizeCanvas(imgObj){
 }
 
 function clearForm(){
-
   set_value("x1", '');
   set_value("y1", '');
   set_value("field_name", '');
@@ -66,10 +63,9 @@ function clearForm(){
 }
 function updateFormWithCoords(event){
   var s = get_state();
-  if(s == STATE_FIRST_CLICK || s == STATE_NOTHING_CLICK){
+  if(s == STATE_NOTHING_CLICK){
     set_value("x1", event.offsetX);
     set_value("y1", event.offsetY);
-    
     
   }
   if(s == STATE_FIRST_CLICK){
@@ -77,41 +73,38 @@ function updateFormWithCoords(event){
     var w = event.offsetX - firstClickX;
     var h = event.offsetY - firstClickY;
     if (event.shiftKey || event.altKey || event.ctrlKey) { 
-      drawPreviewRectangle(ctx,firstClickX, firstClickY, w, h);
+      drawPreviewRectangle(ctx,firstClickX, firstClickY, w, h,"rgba(0,0,0,0.5)");
     }
-
-  }
-  if(s == STATE_SECOND_CLICK){
     set_value("width", event.offsetX - firstClickX);
     set_value("height", event.offsetY - firstClickY);
-    // show the red square on the canvas
-    
-    
-
-    
   }
-
+  if(s == STATE_SECOND_CLICK){// purple
+    drawPreviewRectangle(ctx,firstClickX, firstClickY, w, h,"rgba(1,0,1,0.5)");
+    
+    // show the red square on the canvas
+  }
 }
+
 function getContext(){
   var canvas = document.getElementById("renderArea");
   var ctx = canvas.getContext("2d");
   return ctx;
 }
+
 function getCanvasDimensions(){
   var canvas = document.getElementById("renderArea");
   var w = canvas.width;
   var h = canvas.height;
   return {w:w, h:h};
 }
-function drawPreviewRectangle(ctx,x,y,width,height){
+// default should be "rgba(0,0,0,0.5)"
+function drawPreviewRectangle(ctx,x,y,width,height, color){
   var canvasDimensions = getCanvasDimensions();
   ctx.clearRect(0, 0, canvasDimensions.w, canvasDimensions.h);
-  ctx.fillStyle = "rgba(0,0,0,0.5)";
+  ctx.fillStyle = color;
   ctx.fillRect(x,y,width,height);
-
-  
-
 }
+
 // should be called every time we change the state
 function render(){
   // get the 2d context object from the canvas element with id renderArea
@@ -127,11 +120,8 @@ function render(){
   }
   if (s == STATE_SECOND_CLICK){
     // draw a transparent rectangle between the first and second click positions
-    drawPreviewRectangle(ctx,firstClickX, firstClickY, secondClickX - firstClickX, secondClickY - firstClickY);
-
+    drawPreviewRectangle(ctx,firstClickX, firstClickY, secondClickX - firstClickX, secondClickY - firstClickY, "rgba(0,0,0,0.5)");
   }
-
-
 }
 
 //The purpose of this function is to:
@@ -147,9 +137,33 @@ function handleClick(event) {
     if(get_state() != STATE_FIRST_CLICK){
       return;
     }
+    // if the field_name is empty, do nothing 
+    if(document.getElementById("field_name").value == ""){
+      document.getElementById("field_name").style.backgroundColor = "rgb(255,200,200)";
+      document.getElementById("field_name").focus();
+      render();
+      return;
+    }
+    
+
 
     secondClickX = event.offsetX;
     secondClickY = event.offsetY;
+
+    // fix coords if x2 is left of x1
+    if(secondClickX < firstClickX){
+      var temp = secondClickX;
+      secondClickX = firstClickX;
+      firstClickX = temp;
+    }
+    // fix coords if y2 is above y1
+    if(secondClickY < firstClickY){
+      var temp = secondClickY;
+      secondClickY = firstClickY;
+      firstClickY = temp;
+    }
+    
+
     saveCoords();
     // clear form
     
@@ -159,6 +173,7 @@ function handleClick(event) {
     setTimeout(function(){
       clearForm();
       set_state(STATE_NOTHING_CLICK);
+      document.getElementById("field_name").style.backgroundColor = "white";
       render();
     }, 500);
 
@@ -170,24 +185,15 @@ function handleClick(event) {
     firstClickY = event.offsetY;
   }
 }
-
-//function get global coordinates returns 2 set of coordinates
-function getGlobalCoordinates() {
-  return [firstClickX, firstClickY, secondClickX, secondClickY];
-}
   
 // function calculates width and height, given 2 sets of coordinates
 // it calculates the distance between the two points as width and height
 // inputs: x1,y1,x2,y2
-// outputs: width, height
-function calculateWidthAndHeight (getGlobalCoordinates) {
-  var x1 = getGlobalCoordinates[0];
-  var y1 = getGlobalCoordinates[1];
-  var x2 = getGlobalCoordinates[2];
-  var y2 = getGlobalCoordinates[3];
+// outputs: an object with properties width, height
+function calculateWidthAndHeight(x1,y1,x2,y2){
   var width = x2 - x1;
   var height = y2 - y1;
-  return [width, height];
+  return {width:width, height:height};
 }
 
 function set_value(id, value){
@@ -211,40 +217,28 @@ function get_value(id){
 // in the in-memory-array called "coordArray" which is a global variable
 // clear local storage of any saved files when user clicks the button
 function saveCoords() {
-  var getGlobal = getGlobalCoordinates();
-  var widthAndHeight = calculateWidthAndHeight(getGlobal);
-  var width = widthAndHeight[0];
-  var height = widthAndHeight[1]; 
-  var input_field = ({"field": get_value("field_name"),
-                      "width": width, 
-                      "height": height, 
-                      "x": getGlobal[0], 
-                      "y": getGlobal[1], 
+  
+  var dimensions = calculateWidthAndHeight([firstClickX, firstClickY, secondClickX, secondClickY]);
+  var input_field = {"field":       get_value("field_name"),
+                      "width":      dimensions.width, 
+                      "height":     dimensions.height, 
+                      "x":          firstClickX, 
+                      "y":          firstClickY, 
                       "page_number": get_value("page_number"),
-                      "broker_id": get_value("broker_id")});
+                      "broker_id": get_value("broker_id")};
 
-  set_value("x1", getGlobal[0]);
-  set_value("y1", getGlobal[1]);
-  //set_value("x2", getGlobal[2]);
-  //set_value("y2", getGlobal[3]);
-  set_value("width", width);
-  set_value("height", height);
+  set_value("x1", firstClickX);
+  set_value("y1", firstClickY);
+  set_value("width", dimensions.width);
+  set_value("height", dimensions.height);
 
-  //saveBtn.addEventListener("click", function() {
   coordArray.push(input_field);
   localStorage.setItem("coordArray", JSON.stringify(coordArray));
-  //alert("Coordinates saved!");
-  // }); 
-  //Clear x1,y1,x2,y2,width,height from the page
   
-  //Clear the preview image
-  //previewDoc.setAttribute("src", "");
-
   // auto focus on the field_name field so the user can continue typing
   document.getElementById("field_name").focus();
   
 }
-  
 
 function clearLocalStorage() {
   localStorage.clear(coordArray);
