@@ -39,12 +39,11 @@ function handleClick(event) {
     secondClickX = event.offsetY[1];
     firstClickY = event.offsetY[0];
     secondClickY = event.offsetY[1];
+    saveCoords();
   } else {
     firstClickX = event.offsetX;
     firstClickY = event.offsetY;
   }
-  saveCoords();
-
 }
 
 //function get global coordinates returns 2 set of coordinates
