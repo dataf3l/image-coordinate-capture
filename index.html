@@ -15,7 +15,7 @@
 
     
     <div class="doc-preview" id="docPreview">
-      <img src="" alt="Doc Preview" class="doc-preview__doc" onmousemove="showCoords(event)" onmouseout="clearCoor()" onclick="handleClick()">
+      <img src="" alt="Doc Preview" class="doc-preview__doc" onclick="handleClick(event)">
     	
     </div>
    
@@ -27,8 +27,10 @@
       <!-- a form with these fields:
         x,y,width,height, field name -->
       
-        <input type="number" size="4"  name="x" id="x">
-        <input type="number" size="4"  name="y" id="y">
+        <input type="number" size="4"  name="x1" id="x1">
+        <input type="number" size="4"  name="y1" id="y2">
+        <input type="number" size="4"  name="x2" id="x2">
+        <input type="number" size="4"  name="y2" id="y2">
         <input type="number" size="4"  name="width" id="width">
         <input type="number" size="4"  name="height" id="height">
         <input type="text"   name="field" id="field">

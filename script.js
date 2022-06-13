@@ -43,6 +43,8 @@ function handleClick(event) {
     firstClickX = event.offsetX;
     firstClickY = event.offsetY;
   }
+  saveCoords();
+
 }
 
 //function get global coordinates returns 2 set of coordinates
@@ -71,31 +73,45 @@ function calculateWidthAndHeight (getGlobalCoordinates) {
 // in the in-memory-array called "coordArray" which is a global variable
 // clear local storage of any saved files when user clicks the button
 function saveCoords() {
-  var getGlobalCoordinates = getGlobalCoordinates();
-  var widthAndHeight = calculateWidthAndHeight(getGlobalCoordinates);
+  var getGlobal = getGlobalCoordinates();
+  var widthAndHeight = calculateWidthAndHeight(getGlobal);
   var width = widthAndHeight[0];
   var height = widthAndHeight[1]; 
   var input_field = ({"field": "",
                       "width": width, 
                       "height": height, 
-                      "x": getGlobalCoordinates[0], 
-                      "y": getGlobalCoordinates[1], 
-                      "x2": getGlobalCoordinates[2], 
-                      "y2": getGlobalCoordinates[3]});
-  document.getElementById("x").innerHTML = getGlobalCoordinates[0];
-  document.getElementById("y").innerHTML = getGlobalCoordinates[1];
+                      "x": getGlobal[0], 
+                      "y": getGlobal[1], 
+                      "x2": getGlobal[2], 
+                      "y2": getGlobal[3]});
+  document.getElementById("x1").innerHTML = getGlobal[0];
+  document.getElementById("y1").innerHTML = getGlobal[1];
+  document.getElementById("x2").innerHTML = getGlobal[2];
+  document.getElementById("y2").innerHTML = getGlobal[3];
   document.getElementById("width").innerHTML = width;
   document.getElementById("height").innerHTML = height;
-  saveBtn.addEventListener("click", function() {
-    coordArray.push(input_field);
-    localStorage.setItem("coordArray", JSON.stringify(coordArray));
-    alert("Coordinates saved!");
-  }); 
+  //saveBtn.addEventListener("click", function() {
+  coordArray.push(input_field);
+  localStorage.setItem("coordArray", JSON.stringify(coordArray));
+  //alert("Coordinates saved!");
+  // }); 
+  //Clear x1,y1,x2,y2,width,height from the page
+  document.getElementById("x1").innerHTML = "";
+  document.getElementById("y1").innerHTML = "";
+  document.getElementById("x2").innerHTML = "";
+  document.getElementById("y2").innerHTML = "";
+  document.getElementById("width").innerHTML = "";
+  document.getElementById("height").innerHTML = "";
+  //Clear the preview image
+  previewDoc.setAttribute("src", "");
+  //Clear the input field
+  inpFile.value = "";
+  
 }
   
 
 function clearLocalStorage() {
-  localStorage.clear();
+  localStorage.clear(coordArray);
 }
 
 //showjson the purpose of this function is to show a popup with a 
