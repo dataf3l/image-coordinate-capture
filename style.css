@@ -1,3 +1,6 @@
+* {
+  font-family: Helvetica, 'Open Sans', sans-serif;
+}
 head {
   padding: 0px;
   margin: 0px;
@@ -26,7 +29,7 @@ body {
 
 h3 {
   font-family: sans-serif;
-  text-align: center;
+  
 }
 
 /*.doc-preview {
@@ -41,7 +44,7 @@ h3 {
 
 } */
 
-img {
+.document-preview {
     /*display: block;        iframes are inline by default 
     background: #000; */
     /* border: 1px;          Reset default border */
@@ -50,7 +53,15 @@ img {
     border-style: solid;
     margin: 0px;
     padding: 0px;
-    float: left;
+    cursor: crosshair;
+    opacity:0.2;
+}
+.document-preview , #renderArea {
+  position:absolute;
+  left:0;
+  top:0;
+
+
 }
 
 #inpFile {
@@ -61,12 +72,26 @@ div {
   margin: 0px;
   padding: 0px;
 }
-
 input {
-  margin-left: 10px;
+  font-size:2rem;
+  max-width: 80%;;
 }
 
 #coordinates {
   margin-left: 10px;
   position: sticky;
+}
+
+.field-set {
+      
+    position:fixed;
+    right:20px;
+    top:20px;
+    width: 300px;
+    padding: 20px;
+    box-shadow: #333 0px 0px 10px;
+}
+label {
+  margin-bottom: 20px;
+    display: block;
 }
