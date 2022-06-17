@@ -87,11 +87,11 @@ input {
     position:fixed;
     right:20px;
     top:20px;
-    width: 300px;
+    width: 200px;
     padding: 20px;
     box-shadow: #333 0px 0px 10px;
 }
 label {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
     display: block;
 }

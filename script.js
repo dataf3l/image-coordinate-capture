@@ -61,6 +61,7 @@ function clearForm(){
   set_value("height", '');
   // * page number and broker id are not cleared intentionally
 }
+
 function updateFormWithCoords(event){
   var s = get_state();
   if(s == STATE_NOTHING_CLICK){
@@ -193,7 +194,7 @@ function handleClick(event) {
 function calculateWidthAndHeight(x1,y1,x2,y2){
   var width = x2 - x1;
   var height = y2 - y1;
-  return {width:width, height:height};
+  return {"width":width, "height":height};
 }
 
 function set_value(id, value){
@@ -218,7 +219,8 @@ function get_value(id){
 // clear local storage of any saved files when user clicks the button
 function saveCoords() {
   
-  var dimensions = calculateWidthAndHeight([firstClickX, firstClickY, secondClickX, secondClickY]);
+  var dimensions = calculateWidthAndHeight(firstClickX, firstClickY, secondClickX, secondClickY);
+  console.log(dimensions)
   var input_field = {"field":       get_value("field_name"),
                       "width":      dimensions.width, 
                       "height":     dimensions.height, 
